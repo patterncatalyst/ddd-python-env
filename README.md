@@ -30,6 +30,57 @@ poetry add package-name
 poetry add --group dev package-name
 ```
 
+### Updating the Virtual Environment (.venv)
+
+When you need to update your virtual environment after changes to dependencies:
+
+```bash
+# Update all dependencies to their latest versions according to pyproject.toml
+````bash
+poetry update
+````
+# Update a specific package
+````bash
+poetry update package-name
+````
+
+# Recreate the virtual environment from scratch
+````bash
+poetry env remove --all
+poetry env use python3.12
+````
+
+Make the .venv a local environment
+````bash
+poetry config virtualenvs.in-project true
+poetry install
+````
+
+If installing for production:
+````bash
+poetry install --no-dev
+````
+
+# View information about the current environment
+````bash
+poetry env info
+````
+
+# List all Poetry-managed virtual environments
+````bash
+poetry env list
+````
+
+By default, Poetry creates virtual environments in a centralized location. To create the virtual environment in the project directory:
+
+```bash
+# Configure Poetry to create .venv in the project directory
+poetry config virtualenvs.in-project true
+
+# Then install dependencies
+poetry install
+```
+
 ## Development with Docker
 
 This project includes Docker configuration for development.
