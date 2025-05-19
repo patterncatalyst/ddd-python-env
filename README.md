@@ -1,6 +1,6 @@
 # FastAPI Kafka PostgreSQL Application
 
-This is a FastAPI application that uses Kafka for message processing and PostgreSQL for data storage.
+This is an example application using Domain Driven Design using FastAPI, Kafka and PostgreSQL
 
 ## Dependencies Management
 
@@ -36,15 +36,26 @@ This project includes Docker configuration for development.
 
 ### Starting the Development Environment
 
+When debugging locally and in a terminal
+
 ```bash
-docker-compose up
+docker compose --profile debug up
 ```
 
 ### Docker Desktop Configuration
 
-In order to get docker desktop's compose to work you have to go into:
+In order to get docker desktop's compose to work in Pycharm, you have to go into:
 
 Settings >> Build, Execution, Deployment >> Tools
+
+####
+When using docker desktop on Linux or Mac, you have to change the docker context when using the command line
+e.g. docker context use <<desktop context>>
+
+On my Fedora machine
+```bash
+docker context use desktop-linux
+```
 
 ## API Endpoints
 
