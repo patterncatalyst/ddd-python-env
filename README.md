@@ -1,4 +1,4 @@
-# FastAPI Kafka PostgreSQL Application
+# Domain Driven Design using FastAPI, Kafka and PostgreSQL
 
 This is an example application using Domain Driven Design using FastAPI, Kafka and PostgreSQL
 
