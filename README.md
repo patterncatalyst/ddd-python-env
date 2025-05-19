@@ -6,49 +6,50 @@ This is an example application using Domain Driven Design using FastAPI, Kafka a
 
 This project uses [Poetry](https://python-poetry.org/) for dependency management.
 
-### Installing Poetry
+### Installing and using Poetry
 
 ```bash
 curl -sSL https://install.python-poetry.org | python3 -
 ```
 
-### Installing Dependencies
+#### Installing Dependencies
 
 ```bash
 poetry install
 ```
 
-### Adding New Dependencies
+#### Adding New Dependencies
 
 ```bash
 poetry add package-name
 ```
 
-### Adding Development Dependencies
+#### Adding Development Dependencies
 
 ```bash
 poetry add --group dev package-name
 ```
 
-### Updating the Virtual Environment (.venv)
+#### Updating the Virtual Environment (.venv)
 
 When you need to update your virtual environment after changes to dependencies:
 
-```bash
-# Update all dependencies to their latest versions according to pyproject.toml
+#### Update all dependencies to their latest versions according to pyproject.toml
 ````bash
 poetry update
 ````
-# Update a specific package
+#### Update a specific package
 ````bash
 poetry update package-name
 ````
 
-# Recreate the virtual environment from scratch
+#### Recreate the virtual environment from scratch
 ````bash
 poetry env remove --all
 poetry env use python3.12
 ````
+#### Configure Poetry to create .venv in the project directory
+By default, Poetry creates virtual environments in a centralized location. To create the virtual environment in the project directory:
 
 Make the .venv a local environment
 ````bash
@@ -61,25 +62,15 @@ If installing for production:
 poetry install --no-dev
 ````
 
-# View information about the current environment
+#### View information about the current environment
 ````bash
 poetry env info
 ````
 
-# List all Poetry-managed virtual environments
+#### List all Poetry-managed virtual environments
 ````bash
 poetry env list
 ````
-
-By default, Poetry creates virtual environments in a centralized location. To create the virtual environment in the project directory:
-
-```bash
-# Configure Poetry to create .venv in the project directory
-poetry config virtualenvs.in-project true
-
-# Then install dependencies
-poetry install
-```
 
 ## Development with Docker
 
