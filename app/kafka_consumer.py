@@ -7,7 +7,7 @@ from typing import Dict, Any
 from sqlalchemy.orm import Session
 from .models import SessionLocal, Message
 
-KAFKA_BOOTSTRAP_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "kafka:9092")
+KAFKA_BOOTSTRAP_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:29092")
 KAFKA_TOPIC = "messages"
 
 

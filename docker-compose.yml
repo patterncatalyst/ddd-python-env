@@ -3,6 +3,7 @@ services:
     build:
       context: .
       dockerfile: .devcontainer/Dockerfile
+    profiles: ["default"]
     volumes:
       - .:/app
     ports:
@@ -19,6 +20,7 @@ services:
 
   postgres:
     image: postgres:15
+    profiles: ["default", "debug"]
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -32,6 +34,7 @@ services:
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.4.0
+    profiles: ["default", "debug"]
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
@@ -39,6 +42,7 @@ services:
       - app-network
 
   kafka:
+    profiles: ["default", "debug"]
     image: confluentinc/cp-kafka:7.4.0
     depends_on:
       - zookeeper
