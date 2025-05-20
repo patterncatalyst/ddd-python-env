@@ -62,7 +62,8 @@ services:
     profiles: ["default", "debug"]
     image: confluentinc/cp-kafka:7.4.0
     depends_on:
-      - zookeeper
+      zookeeper:
+        condition: service_healthy
     ports:
       - "9092:9092"
       - "29092:29092"
@@ -88,7 +89,8 @@ services:
   kafka-init:
     image: confluentinc/cp-kafka:7.4.0
     depends_on:
-      - kafka
+      kafka:
+        condition: service_healthy
     volumes:
       - ./scripts/create-topics.sh:/docker/scripts/create-topics.sh:ro
     networks:

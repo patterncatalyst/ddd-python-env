@@ -12,6 +12,18 @@ This project uses [Poetry](https://python-poetry.org/) for dependency management
 curl -sSL https://install.python-poetry.org | python3 -
 ```
 
+Or
+
+````bash
+pip install -U poetry
+````
+
+#### If you did not create the project with poetry and do not have a pyproject.toml file
+
+````bash
+poetry init
+````
+
 #### Installing Dependencies
 
 ```bash
@@ -81,8 +93,19 @@ This project includes Docker configuration for development.
 When debugging locally and in a terminal
 
 ```bash
-docker compose --profile debug up
+docker compose --profile debug up -d
 ```
+To bring docker compose down
+
+````bash
+docker compose --profile debug down
+````
+
+If you want to remove the volume(s) so you start clean next time
+
+````bash
+docker compose --profile debug down -v
+````
 
 ### Docker Desktop Configuration
 
@@ -91,8 +114,18 @@ In order to get docker desktop's compose to work in Pycharm, you have to go into
 Settings >> Build, Execution, Deployment >> Tools
 
 ####
-When using docker desktop on Linux or Mac, you have to change the docker context when using the command line
+When using docker desktop on Linux or Mac, you may have to change the docker context when using 
+the command line
 e.g. docker context use <<desktop context>>
+
+This will change the docker socket.
+To list the sockets:
+
+````bash
+docker context list
+````
+
+Then select the context you wish to use.  On Linux, docker desktop may have a different context.
 
 On my Fedora machine
 ```bash

@@ -12,4 +12,4 @@ kafka-topics --bootstrap-server kafka:9092 \
 kafka-topics --bootstrap-server kafka:9092 \
   --topic analytics --create --partitions 3 --replication-factor 1
 
-echo "Topics created!"
+echo "Topics and partitions created!"
