@@ -9,8 +9,10 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - postgres
-      - kafka
+      kafka:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/app_db
       - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
@@ -19,27 +21,42 @@ services:
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
   postgres:
-    image: postgres:15
+    image: postgres:16
+    container_name: ddd-postgres
     profiles: ["default", "debug"]
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=app_db
+      - POSTGRES_DB=messages_db
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - app-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U quarkus" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.4.0
     profiles: ["default", "debug"]
+    ports:
+      - "2181:2181"
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
+      LOG_DIR: /tmp/logs
     networks:
       - app-network
+    healthcheck:
+      test: [ "CMD-SHELL", "echo ruok | nc localhost 2181 || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   kafka:
     profiles: ["default", "debug"]
@@ -59,6 +76,27 @@ services:
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: true
     networks:
       - app-network
+    volumes:
+      - kafka-data:/var/lib/kafka/data
+    healthcheck:
+      test: [ "CMD-SHELL", "kafka-topics --bootstrap-server localhost:9092 --list || exit 1" ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 15s
+
+  kafka-init:
+    image: confluentinc/cp-kafka:7.4.0
+    depends_on:
+      - kafka
+    volumes:
+      - ./scripts/create-topics.sh:/docker/scripts/create-topics.sh:ro
+    networks:
+      - app-network
+    entrypoint: ["/bin/bash", "/docker/scripts/create-topics.sh"]
+    restart: "no"
+
+
 
 networks:
   app-network:
@@ -66,3 +104,4 @@ networks:
 
 volumes:
   postgres_data:
+  kafka-data:
