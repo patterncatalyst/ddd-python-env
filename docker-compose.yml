@@ -31,7 +31,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres-data
+      - postgres-data:/var/lib/postgresql/data
     networks:
       - app-network
     healthcheck:
